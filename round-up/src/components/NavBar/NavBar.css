@@ -1,0 +1,38 @@
+.navbar {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    background-color:rgb(23, 11, 43);
+  }
+
+#nav-pic {
+  height: 45px;
+  float: left;
+  padding: 17px;
+  padding-right: 7px;
+}
+
+#nav-button {
+  display: block;
+  color: rgb(255, 240, 221);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float:left;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 25px;
+  font-size: 20px;
+  margin: 0px;
+}
+#nav-button:hover {
+  background-color: rgb(84, 48, 142);
+}
+.navbar-div {
+  color:green;
+  display: block;
+  text-align: center;
+  float:left;
+  padding-top: 25px;
+  font-size: 21px;
+}
+   
