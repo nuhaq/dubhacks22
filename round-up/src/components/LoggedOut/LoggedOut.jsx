@@ -1,10 +1,6 @@
 import * as React from "react"
 import "./LoggedOut.css"
 import LoginForm from "../LoginForm/LoginForm"
-import bgImage from './coffee.jpg'
-import { useState, useEffect } from "react"
-import axios from "axios"
-
 
 export default function LoggedOut(props) {
 

@@ -65,24 +65,6 @@ router.post('/add/:ein', async (req, res) => {
     res.send(charity)
   })
   
-/**
- * remove liked charity
- */
-router.post('/remove/:ein', async (req, res) => {
-    //if they paid the charity, they cant remove it from liked 
-    try {
-        let charity = new Parse.Query("Charities")
-        charity.equalTo("bookId", req.params.ein)
-        charity.equalTo("userId", req.body.userId)
-        let response = await charity.first()
-        if (response) {
-            //if charity exists:
-            await response.destroy()
-        }
-        res.status(200).send("removed")
-    } catch (err) {
-        res.status(400).send({"error" : "remove failed. " + err })
-    }
-})
+
 
 module.exports = router

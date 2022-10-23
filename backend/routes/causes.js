@@ -53,20 +53,7 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
         var scores = [];
         const embeddings = model.embed(input);
 
-        /*
-        * The output of the embed method is an object with two keys:
-        * {
-        *   queryEmbedding: tf.Tensor;
-        *   responseEmbedding: tf.Tensor;
-        * }
-        * queryEmbedding is a tensor containing embeddings for all queries.
-        * responseEmbedding is a tensor containing embeddings for all answers.
-        * You can call `arraySync()` to retrieve the values of the tensor.
-        * In this example, embed_query[0] is the embedding for the query
-        * 'How are you feeling today?'
-        * And embed_responses[0] is the embedding for the answer
-        * 'I\'m not feeling very well.'
-        */
+       
         const embed_query = embeddings['queryEmbedding'].arraySync();
         const embed_responses = embeddings['responseEmbedding'].arraySync();
         // compute the dotProduct of each query and response pair.
