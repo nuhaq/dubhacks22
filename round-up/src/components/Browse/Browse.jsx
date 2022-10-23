@@ -9,10 +9,10 @@ export default function Browse() {
     const [isFetching, setIsFetching] = useState(false)
     console.log("CHARITIES" , charities)
 
-    async function rec(cause, ein, name, causeId, mission, tagline, rating, websiteURL, accountabilityRating, financialRating) {
-        // const response = await axios.get('http://localhost:3001/rec')
-        //on like, remove from 
-    }
+    // async function rec(cause, ein, name, causeId, mission, tagline, rating, websiteURL, accountabilityRating, financialRating) {
+    //     // const response = await axios.get('http://localhost:3001/rec')
+    //     //on like, remove from 
+    // }
 
 
 
@@ -35,9 +35,7 @@ export default function Browse() {
             <div>{charities?.map((c, idx) => {
                 return (
                 <div key={idx}>
-                    {c.charityName} <button onClick={() => rec(c.cause, c.ein, c.charityName, c.causeId, c.mission,
-                    c.tagline, c.currentRating.score, c.websiteURL, c.currentRating.accountabilityRating, 
-                    c.currentRating.financialRating)}> like</button>
+                    {c.charityName} 
                 </div>
                 );
             })}</div>

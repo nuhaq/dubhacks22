@@ -4,7 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const Parse = require('parse/node');
 const charRoute = require('./routes/charity')
-const payRoute = require('./routes/payments')
+const causeRoute = require('./routes/causes')
 // const recRoute = require('./routes/recommendations')
 
 const app = express()
@@ -14,11 +14,15 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use('/charity', charRoute)
 // app.use('rec', recRoute)
-// app.use('/pay', payRoute)
+app.use('/cause', causeRoute)
+
+app.get('/', async (req, res) => {
+  res.send({"ping": "pong"})
+})
 
 
 const MASTERKEY = "qkJhcun01wceaFOdmN21s5LFoHUlKegBLC2qpD1D"
-const APPKEY = "hxxKW2pOrWR6gRv5PTEnlPVmqxfLhTuyDfsevmNW"
+const APPKEY = "E26bmvoZWQbNaY6kVan2HcX73kcLTOgh1PmC5cst"
 const JSKEY = "yv12nPoW7Q3IHH95cF3ExZ1kT1BrMJrWw1FTEN4c"
 Parse.initialize(APPKEY, JSKEY, MASTERKEY);
 Parse.serverURL = 'https://parseapi.back4app.com/'
