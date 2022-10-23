@@ -19,14 +19,16 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
     const userQuery = new Parse.Query("_Session")
     userQuery.equalTo("sessionToken", req.params.sessionToken)
     let userID = await userQuery.first({useMasterKey : true})
-    userID = user.attributes.user.id
+    userID = userID.attributes.user.id
 
     const recQuery = new Parse.Query("recs").equalTo("userId", userID)
     let currRec = await recQuery.first()
-    let date = new Date(Date.parse(currRec.attributes.updatedAt)).getDate()
-    if ((Math.abs(new Date().getDate() - date)) <= 2) {
-        //updated within 2 days ago, just return that
-        res.status(200).send(currRec.attributes.recommendations)
+    if (currRec) {
+        let date = new Date(Date.parse(currRec.attributes.updatedAt)).getDate()
+        if ((Math.abs(new Date().getDate() - date)) <= 2) {
+            //updated within 2 days ago, just return that
+            res.status(200).send(currRec.attributes.recommendations)
+        }
     }
     
     const query = new Parse.Query("causes").notEqualTo("causeId", req.params.causeId)
@@ -78,6 +80,13 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
             return b[1] - a[1];
         });
         let result = await explore(combined[0][2], combined[1][2], req.params.causeId)
+
+        const rec = Parse.Object.extend("recs")
+        let recOb = new rec()
+        recOb.set("recommendations", result)
+        recOb.set("userId", userID)
+        recOb.save()
+
         res.send(result)
     });
     
