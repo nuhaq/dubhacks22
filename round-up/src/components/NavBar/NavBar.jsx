@@ -26,7 +26,7 @@ export default function NavBar(props) {
     return (
     <nav className="navbar">
       <Link to="/"><img id="nav-pic" src={logo}/></Link>
-      <Link to="/home"><p id="nav-button">Home</p></Link>
+      <Link to="/browse"><p id="nav-button">Browse</p></Link>
       <Link to="/search"><p id="nav-button">Search</p></Link>
       <Link to="/library"><p id="nav-button">My Library</p></Link>
       <Link to="/playlist"><p id="nav-button">Playlist Gen</p></Link>
