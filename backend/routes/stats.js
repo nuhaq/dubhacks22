@@ -13,9 +13,10 @@ router.get('/:sessionToken', async (req, res) => {
 
     const paidQuery = new Parse.Query("paidCharities").equalTo("userId", user)
     let paid = await paidQuery.find();
-    let total = 0
+    let total = 0.0
     paid.forEach(e => {
-        total += parseInt(e.attributes.amountPaid)
+        total += parseFloat(e.attributes.amountPaid)
+        console.log(total)
     })
     res.send({total})
 })

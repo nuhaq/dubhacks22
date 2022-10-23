@@ -19,7 +19,7 @@ export default function Payment({sessionToken}) {
     }
    
     async function calculatePayment() {
-        let totalRounded = Math.ceil (parseInt(payment) + (userData.monthlyGoal / userData.paymentsPerPeriod)) - payment
+        let totalRounded = (userData.monthlyGoal / userData.paymentsPerPeriod)
         setRounded(totalRounded)
         await axios.post(`http://localhost:3001/payment/send/${totalRounded}/${sessionToken}`,{
             "ein": charity.ein,
@@ -40,9 +40,10 @@ export default function Payment({sessionToken}) {
     }, [])
  
       return (
-       <><input type="text" onChange={(e) => {setPayment(e.target.value)}}></input>
+       <div className="payments"><input type="text" onChange={(e) => {setPayment(e.target.value)}}></input>
        <button onClick={calculatePayment}>Submit!</button>
-       <h1>{rounded === 0 ? "" : `You donated $${rounded} to  ${charity.charityName}`}</h1></>
+       <h4>{rounded === 0 ? "" : `Rounded up to $${(parseFloat(rounded)+parseFloat(payment)).toFixed(2)}`}</h4>
+       <h1>{rounded === 0 ? "" : `You donated $${rounded.toFixed(2)} to  ${charity.charityName}`}</h1></div>
       )
  
 }
