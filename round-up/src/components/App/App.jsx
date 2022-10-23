@@ -3,6 +3,7 @@ import axios from "axios"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { useState, useEffect } from "react"
 import NavBar from "../NavBar/NavBar"
+import LoggedOut from "../LoggedOut/LoggedOut"
 
 
 import NotFound from "../NotFound/NotFound"
@@ -33,7 +34,7 @@ export default function App() {
             <BrowserRouter>
             <NavBar sessionToken={sessionToken} setSessionToken={setSessionToken} spotifyToken={spotifyToken} setSpotifyToken={setSpotifyToken}/>
             <Routes>
-                {/* <Route path="/" element={<Home sessionToken={sessionToken} />}/> */}
+            <Route path="/" element={<LoggedOut sessionToken={sessionToken} setSessionToken={setSessionToken}/>}/>
                 <Route path="/profile" />
                 <Route path="/browse" element={<Browse />}/>
                 <Route path="*" element={<NotFound/>}/>

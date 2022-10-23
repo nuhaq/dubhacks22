@@ -63,12 +63,18 @@ app.post('/login', async (req, res) => {
 app.post('/register', async(req, res) => {
     let user = new Parse.User(req.body);
       user.signUp().catch((e) => {res.status(400).send(e.message)})
-      user.set("lists", ["Read", "Reading", "Want to Read"])
       await user.save(null, { useMasterKey: true })
       res.status(201).send({"user": user, "sessionToken": await user.getSessionToken()})
 })
 
-
+app.get('/name/:sessionToken', async (req, res) => {
+  const user = new Parse.Query(Session).equalTo("sessionToken", req.params.sessionToken)
+  const session = await user.first({ useMasterKey: true })
+  let name = session.get("user")
+  await name.fetch()
+  name = name.get("username")
+  res.status(200).send(name)
+})
 
 
 module.exports = app

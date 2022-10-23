@@ -1,0 +1,30 @@
+.input {
+    margin: 10px;
+    border-radius: 8px;
+    background-color: rgb(255, 240, 221);
+}
+
+.title {
+    font-weight: 550;
+}
+
+.link {
+    background-color: white;
+    border: none;
+    padding: 0px;
+    text-decoration-line: underline;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+.bottom-link {
+    padding: 20px 0px 8px 0px;
+}
+.welcome {
+    height: 128px;
+    margin-top: 110px;
+    font-size: 34px;
+    font-family: serif;
+    font-weight: 600;
+    color: rgb(50, 24, 91);
+}
