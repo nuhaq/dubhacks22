@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const Parse = require('parse/node');
 const charRoute = require('./routes/charity')
 const causeRoute = require('./routes/causes')
-// const recRoute = require('./routes/recommendations')
+const payRoute = require('./routes/payments')
 
 const app = express()
 
@@ -13,7 +13,7 @@ app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use('/charity', charRoute)
-// app.use('rec', recRoute)
+app.use('/payment', payRoute)
 app.use('/cause', causeRoute)
 
 app.get('/', async (req, res) => {
@@ -68,6 +68,7 @@ app.post('/register', async(req, res) => {
 })
 
 app.get('/name/:sessionToken', async (req, res) => {
+  res.status(200).send("nuha")
   const user = new Parse.Query("_Session").equalTo("sessionToken", req.params.sessionToken)
   const session = await user.first({ useMasterKey: true })
   let name = session.get("user")

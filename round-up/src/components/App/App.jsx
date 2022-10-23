@@ -4,7 +4,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { useState, useEffect } from "react"
 import NavBar from "../NavBar/NavBar"
 import LoggedOut from "../LoggedOut/LoggedOut"
-
+import Payment from "../Payment/Payment"
 
 import NotFound from "../NotFound/NotFound"
 import Browse from "../Browse/Browse"
@@ -33,6 +33,7 @@ export default function App() {
             <Route path="/" element={<LoggedOut sessionToken={sessionToken} setSessionToken={setSessionToken}/>}/>
                 <Route path="/profile" />
                 <Route path="/browse" element={<Browse sessionToken={sessionToken} />}/>
+                <Route path="/payment" element={<Payment sessionToken={sessionToken}/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
             </BrowserRouter>

@@ -80,7 +80,7 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
             return b[1] - a[1];
         });
         let result = await explore(combined[0][2], combined[1][2], req.params.causeId)
-
+        //if rec already exists for that user, replace instead of creating new object
         const rec = Parse.Object.extend("recs")
         let recOb = new rec()
         recOb.set("recommendations", result)
