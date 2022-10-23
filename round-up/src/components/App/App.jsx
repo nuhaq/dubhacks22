@@ -10,13 +10,9 @@ import NotFound from "../NotFound/NotFound"
 import Browse from "../Browse/Browse"
 
 export default function App() {
-    const [sessionToken, setSessionToken] = useState(localStorage.getItem('sessionToken'))
+    const [sessionToken, setSessionToken] = useState((localStorage.getItem('sessionToken')))
     const [spotifyToken, setSpotifyToken] = useState(localStorage.getItem("token"))
  
-
-
-
-
 
     /**
      * get trending books for landing page
@@ -36,7 +32,7 @@ export default function App() {
             <Routes>
             <Route path="/" element={<LoggedOut sessionToken={sessionToken} setSessionToken={setSessionToken}/>}/>
                 <Route path="/profile" />
-                <Route path="/browse" element={<Browse />}/>
+                <Route path="/browse" element={<Browse sessionToken={sessionToken} />}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
             </BrowserRouter>

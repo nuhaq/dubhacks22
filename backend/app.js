@@ -68,7 +68,7 @@ app.post('/register', async(req, res) => {
 })
 
 app.get('/name/:sessionToken', async (req, res) => {
-  const user = new Parse.Query(Session).equalTo("sessionToken", req.params.sessionToken)
+  const user = new Parse.Query("_Session").equalTo("sessionToken", req.params.sessionToken)
   const session = await user.first({ useMasterKey: true })
   let name = session.get("user")
   await name.fetch()
