@@ -22,7 +22,6 @@ export default function Browse({sessionToken}) {
             "accountabilityRating": accountabilityRating,
             "financialRating": financialRating
         })
-        console.log(response.data)
         //on like, add to charity list in backend
         //check whether to update ML 
         // const res2 = axios.get(`http://localhost:3001/cause/${causeID}/${sessionToken}`)
@@ -32,8 +31,10 @@ export default function Browse({sessionToken}) {
 
     async function getCharities() {
         setIsFetching(true)
-        const response = await axios.get('http://localhost:3001/charity/orgs')
-        setCharities(response.data)
+        const response = await axios.get(`http://localhost:3001/payment/charity/${sessionToken}`)
+        let causeID = response.data.cause.causeID
+        const response2 = await axios.get(`http://localhost:3001/cause/${causeID}/${sessionToken}`)
+        setCharities(response2.data)
         setIsFetching(false)
 
     }
@@ -44,12 +45,18 @@ export default function Browse({sessionToken}) {
       return (
         <div>
         {isFetching ? <div>LOADING</div>: 
-        <div>
+        <div className="grid">
             {charities?.map(c => {
                 return (
-                    <div>{c?.charityName} <button onClick={() => addLiked(c.cause.causeName, c.ein, c.charityName, c.cause.causeId, c.mission,
+                    <div className="charity">
+                        <h2>{c?.charityName}</h2>
+                        <div className="tag">{c.tagLine}</div>
+                        <div className="mission">{c.mission}</div>
+                    <button onClick={() => addLiked(c.cause.causeName, c.ein, c.charityName, c.cause.causeId, c.mission,
                         c.tagline, c.currentRating.score, c.websiteURL, c.currentRating.accountabilityRating, 
-                        c.currentRating.financialRating)}> like</button></div>
+                        c.currentRating.financialRating)}> Like This Charity!
+                    </button>
+                    </div>
                 )
             })}
             </div>}

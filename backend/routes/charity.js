@@ -17,19 +17,19 @@ router.get('/orgs', async (req, res) => {
 
 
 /**
- * get user's liked charities to display on profile
+ * get user's liked charities to display on stat page
  */
-router.get('/liked/:userId', async (req, res) => {
+router.get('/liked/:sessionToken', async (req, res) => {
     try {
         let query = new Parse.Query("_Session")
         query.equalTo("sessionToken", req.params.sessionToken)
         let user = await query.first({useMasterKey : true})
         user = user.attributes.user.id
-        let bookQuery = new Parse.Query("Books")
-        bookQuery.equalTo("userId", user)
-        bookQuery.descending("createdAt")
-        let books = await bookQuery.find()
-        res.status(200).send(books.slice(0, 5))
+        let charQuery = new Parse.Query("charities")
+        charQuery.equalTo("userID", user)
+        charQuery.descending("createdAt")
+        let char = await charQuery.find()
+        res.status(200).send(char)
     } catch (err) {
         res.status(400).send({"error" : "couldn't get recent" + err })
     }

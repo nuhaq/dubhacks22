@@ -23,13 +23,14 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
 
     const recQuery = new Parse.Query("recs").equalTo("userId", userID)
     let currRec = await recQuery.first()
-    if (currRec) {
+    console.log(currRec)
+    if (currRec!==null) {
         let date = new Date(Date.parse(currRec.attributes.updatedAt)).getDate()
-        if ((Math.abs(new Date().getDate() - date)) <= 2) {
-            //updated within 2 days ago, just return that
-            res.status(200).send(currRec.attributes.recommendations)
-        }
+        //updated within 2 days ago, just return that
+        res.status(200).send(currRec.attributes.recommendations)
+        
     }
+    else {
     
     const query = new Parse.Query("causes").notEqualTo("causeId", req.params.causeId)
     let list = await query.find()
@@ -88,7 +89,7 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
         recOb.save()
 
         res.send(result)
-    });
+    })};
     
     // Calculate the dot product of two vector arrays.
     const dotProduct = (xs, ys) => {
@@ -112,7 +113,6 @@ router.get('/:causeId/:sessionToken', async (req, res) => {
 
 
 async function explore(cause1, cause2, randomCause) {
-    console.log(cause1)
     const orgCall = `https://api.data.charitynavigator.org/v2/Organizations?app_key=9615959f668878693152d3105e078b35&app_id=4d609aa2&noGovSupport=false&sort=RATING%3ADESC&pageSize=5&causeID=`
     const response = await axios.get(orgCall+cause1)
     const response2 = await axios.get(orgCall+cause2)
