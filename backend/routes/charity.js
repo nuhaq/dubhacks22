@@ -38,15 +38,22 @@ router.get('/liked/:userId', async (req, res) => {
 /**
  * add liked charity to list
  */
-router.post('/like/:ein', async (req, res) => {
-    const Charity = Parse.Object.extend("Charities")
-    let charity = new Charity
+router.post('/add/:ein', async (req, res) => {
+    //check to see if charity is there
+    const Charity = Parse.Object.extend("charities")
+
+    let query = new Parse.Query("_Session")
+    query.equalTo("sessionToken", req.body.sessionToken)
+    let user = await query.first({useMasterKey : true})
+    user = user.attributes.user.id
+
+    let charity = new Charity()
     charity.set({
       "ein" : req.params.ein,
-      "userId": req.body.userId,
+      "userID": user,
       "name": req.body.name,
       "cause": req.body.cause,
-      "causeId": req.body.causeId,
+      "causeID": req.body.causeID,
       "mission": req.body.mission,
       "tagline": req.body.tagline,
       "rating": req.body.rating,
@@ -54,6 +61,8 @@ router.post('/like/:ein', async (req, res) => {
       "accountabilityRating": req.body.accRating,
       "financialRating": req.body.finRating
     })
+    charity.save()
+    res.send(charity)
   })
   
 /**

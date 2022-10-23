@@ -14,7 +14,21 @@ router.use(cors())
  * 2. call this to generate 2 similar causes
  * 3. create explore page with cause of (random charity) + 2 similar causes + shuffle 
  */
-router.get('/:causeId', async (req, res) => {
+router.get('/:causeId/:sessionToken', async (req, res) => {
+    //only update recs every 2 days
+    const userQuery = new Parse.Query("_Session")
+    userQuery.equalTo("sessionToken", req.params.sessionToken)
+    let userID = await userQuery.first({useMasterKey : true})
+    userID = user.attributes.user.id
+
+    const recQuery = new Parse.Query("recs").equalTo("userId", userID)
+    let currRec = await recQuery.first()
+    let date = new Date(Date.parse(currRec.attributes.updatedAt)).getDate()
+    if ((Math.abs(new Date().getDate() - date)) <= 2) {
+        //updated within 2 days ago, just return that
+        res.status(200).send(currRec.attributes.recommendations)
+    }
+    
     const query = new Parse.Query("causes").notEqualTo("causeId", req.params.causeId)
     let list = await query.find()
     let list2 = list.map(e => {return e.attributes.causeName})
